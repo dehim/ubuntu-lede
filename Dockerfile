@@ -26,7 +26,7 @@ RUN apt-get update \
     && mkdir -p /var/log/supervisor \
     && useradd -m openwrt \
     && echo 'root:root' |chpasswd \
-    && echo -e 'www-data  ALL=(ALL:ALL) ALL \nwww-data  ALL=(ALL:ALL) NOPASSWD:ALL \n\nopenwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/default \
+    && echo 'www-data  ALL=(ALL:ALL) ALL \nwww-data  ALL=(ALL:ALL) NOPASSWD:ALL \n\nopenwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/default \
     && chmod 440 /etc/sudoers.d/default \
     && ssh-keygen -q -b 2048 -t rsa  -f /root/.ssh/id_rsa  -N '' \
     && cat /root/.ssh/id_rsa >> /etc/ssh/id_rsa \
