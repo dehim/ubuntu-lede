@@ -33,6 +33,7 @@ RUN apt-get update \
     # && ssh-keygen -q -t ecdsa -f /etc/ssh/id_ecdsa -N '' \
     && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
+    && echo '\nTCPKeepAlive yes \nServerAliveInterval 300' >> /etc/ssh/sshd_config \
     # && su openwrt \
     # && cd ~/lede \
     && git clone https://github.com/coolsnowwolf/lede.git /var/lede/ \
