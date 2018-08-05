@@ -34,10 +34,12 @@ RUN apt-get update \
     # && ssh-keygen -q -t ecdsa -f /etc/ssh/id_ecdsa -N '' \
     && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
-    && mkdir -p /var/lede \
-    && git clone https://github.com/coolsnowwolf/lede.git /var/lede/ \
-    && /var/lede/scripts/feeds update -a \
-    && /var/lede/scripts/feeds install -a
+    && su openwrt \
+    && mkdir -p ~/lede \
+    && cd ~/lede \
+    && git clone https://github.com/coolsnowwolf/lede.git ~/lede/ \
+    && ~/lede/scripts/feeds update -a \
+    && ~/lede/scripts/feeds install -a
 
 # 复制文件夹
 COPY files /
