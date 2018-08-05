@@ -1,9 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER admin@hiram.cn
 
-#避免安装过程弹出框
 ENV DEBIAN_FRONTEND noninteractive
-ENV FORCE_UNSAFE_CONFIGURE 1
 
 RUN apt-get update \
     && apt-get install -y sudo \
@@ -21,6 +19,7 @@ RUN apt-get update \
     && dpkg-reconfigure -f noninteractive tzdata \
     # remove caches
     # && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /var/lede \
     && mkdir -p /var/run/sshd \
     && mkdir -p /etc/supervisor/conf.d \
     && mkdir -p /var/log/supervisor \
@@ -34,15 +33,16 @@ RUN apt-get update \
     # && ssh-keygen -q -t ecdsa -f /etc/ssh/id_ecdsa -N '' \
     && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
-    && su openwrt \
-    && mkdir -p ~/lede \
-    && cd ~/lede \
-    && git clone https://github.com/coolsnowwolf/lede.git ~/lede/ \
-    && ~/lede/scripts/feeds update -a \
-    && ~/lede/scripts/feeds install -a
+    # && su openwrt \
+    # && cd ~/lede \
+    && git clone https://github.com/coolsnowwolf/lede.git /var/lede/ \
+    && /var/lede/scripts/feeds update -a \
+    && /var/lede/scripts/feeds install -a \
+    && chown -R openwrt:openwrt /var/lede/
 
-# 复制文件夹
 COPY files /
+
+WORKDIR /var/lede
 
 CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisor/supervisord.conf"]
 
