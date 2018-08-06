@@ -37,8 +37,8 @@ RUN apt-get update \
     # && su openwrt \
     # && cd /var/lede \
     && git clone https://github.com/coolsnowwolf/lede.git /var/lede/ \
-    && scripts/feeds update -a \
-    && scripts/feeds install -a \
+    && ./scripts/feeds update -a \
+    && ./scripts/feeds install -a \
     && make -j1 V=s package/feeds/packages/protobuf/compile \
     && make -j1 V=s package/feeds/packages/protobuf-c/compile
 
