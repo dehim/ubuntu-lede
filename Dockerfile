@@ -35,13 +35,17 @@ RUN apt-get update \
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
     && echo '\nTCPKeepAlive yes \nServerAliveInterval 300' >> /etc/ssh/sshd_config \
     # && su openwrt \
-    # && cd ~/lede \
+    # && cd /var/lede \
     && git clone https://github.com/coolsnowwolf/lede.git /var/lede/ \
-    && /var/lede/scripts/feeds update -a \
-    && /var/lede/scripts/feeds install -a \
-    && chown -R openwrt:openwrt /var/lede/
+    && scripts/feeds update -a \
+    && scripts/feeds install -a \
+    && make -j1 V=s package/feeds/packages/protobuf/compile \
+    && make -j1 V=s package/feeds/packages/protobuf-c/compile
 
 COPY files /
+
+RUN cd /var/lede \
+    && chown -R openwrt:openwrt /var/lede/
 
 WORKDIR /var/lede
 
