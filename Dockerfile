@@ -35,7 +35,7 @@ RUN apt-get update \
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
     && echo '\nTCPKeepAlive yes \nServerAliveInterval 300' >> /etc/ssh/sshd_config \
     # && su openwrt \
-    # && cd /var/lede \
+    && cd /var/lede \
     && git clone https://github.com/coolsnowwolf/lede.git /var/lede/ \
     && ./scripts/feeds update -a \
     && ./scripts/feeds install -a \
