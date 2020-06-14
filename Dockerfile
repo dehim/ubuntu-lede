@@ -6,8 +6,8 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY files /
 
 RUN chown -R openwrt:openwrt /home/openwrt \
-    && cd /home/openwrt/lede \
-    && su openwrt -l -c "git pull \
+    && su openwrt -l -c "cd /home/openwrt/lede \
+                         && git pull \
                          && ./scripts/feeds update -a \
                          && ./scripts/feeds install -a \
                          && cp -f /home/openwrt/.config .config \
