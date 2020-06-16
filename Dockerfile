@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY files /
 
 RUN apt-get update \
+    && mkdir -p /home/openwrt/target \
     && echo 'abc' > /home/openwrt/target/test.txt
 
 FROM ubuntu:16.04
