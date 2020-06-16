@@ -26,6 +26,7 @@ RUN apt-get update \
     && mkdir -p /etc/supervisor/conf.d \
     && mkdir -p /var/log/supervisor \
     && mkdir -p /shareVolume_demo/config/ssh \
+    && mkdir -p /shareVolume_demo/config/supervisor/ \
     && ssh-keygen -t dsa -f /shareVolume_demo/config/ssh/id_dsa -N "" \
     && ssh-keygen -t rsa -f /shareVolume_demo/config/ssh/id_rsa -N "" \
     && ssh-keygen -t ecdsa -f /shareVolume_demo/config/ssh/id_ecdsa -N "" \
@@ -55,12 +56,6 @@ RUN apt-get update \
     && echo "alias cp='cp -i'" >> ~/.bashrc \
     && echo "set mouse=c" > ~/.vimrc \
     && echo "if test -f .bashrc; then \nsource .bashrc \nfi " > ~/.bash_profile \
-    && rm -f /home/www/.vimrc /home/www/.bashrc \
-    && cp -rf ~/.vimrc /home/www/.vimrc \
-    && cp -rf ~/.bashrc /home/www/.bashrc \
-    && chown www:www /home/www/.vimrc \
-    && chown www:www /home/www/.bashrc \
-    && chown -R www:www /shareVolume_demo/config/ssh \
     && chmod 600 /shareVolume_demo/config/ssh/* \
     && chmod 644 /shareVolume_demo/config/ssh/*.pub \
     && mv /etc/ssh/*_demo /shareVolume_demo/config/ssh/ \
