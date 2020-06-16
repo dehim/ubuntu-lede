@@ -19,7 +19,6 @@ RUN apt-get update \
     && apt-get install -y supervisor openssh-server openssl vim tzdata git sudo xz-utils \
                build-essential \
     && echo 'root:root' |chpasswd \
-    && chmod 440 /etc/sudoers.d/default \
     && cp -f /usr/share/zoneinfo/Asia/Chongqing /etc/localtime \
     && mv /bin/sh /bin/sh_bak \
     && ln -s /bin/bash /bin/sh \
