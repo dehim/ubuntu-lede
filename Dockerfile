@@ -9,11 +9,9 @@ RUN apt-get update \
                           build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core \
                           gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget \
     && cp -f /usr/share/zoneinfo/Asia/Chongqing /etc/localtime \
-    # remove caches
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m openwrt \
     && echo 'openwrt ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/default \
-    # 准备编译
     && chown -R openwrt:openwrt /home/openwrt \
     && su openwrt -l -c "cd /home/openwrt \
                          && git clone https://github.com/coolsnowwolf/lede \
@@ -33,7 +31,6 @@ FROM ubuntu:16.04
 
 LABEL maintainer "dehim"
 
-#避免安装时弹出对话框
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
@@ -92,5 +89,4 @@ VOLUME ["/shareVolume"]
 
 CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 
-# PORT
 EXPOSE 22
