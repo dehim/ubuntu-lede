@@ -5,8 +5,29 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY files /
 
 RUN apt-get update \
-    && mkdir -p /home/openwrt/target \
-    && echo 'abc' > /home/openwrt/target/test.txt
+    && apt-get install -y sudo curl apt-utils tzdata openssh-server dialog vim iputils-ping supervisor time \
+                          build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core \
+                          gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget \
+    && cp -f /usr/share/zoneinfo/Asia/Chongqing /etc/localtime \
+    # remove caches
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -m openwrt \
+    && echo 'openwrt ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/default \
+    # 准备编译
+    && chown -R openwrt:openwrt /home/openwrt \
+    && su openwrt -l -c "cd /home/openwrt \
+                         && git clone https://github.com/coolsnowwolf/lede \
+                         && cd /home/openwrt/lede/ \
+                         && sed -i 's@#src-git helloworld https://github.com/fw876/helloworld@src-git helloworld https://github.com/fw876/helloworld@' /home/openwrt/lede/feeds.conf.default \
+                         && ./scripts/feeds update -a \
+                         && ./scripts/feeds install -a \
+                         && cp /home/openwrt/.config .config \
+                         && make -j$(getconf _NPROCESSORS_ONLN) download V=s \
+                         && make -j$(getconf _NPROCESSORS_ONLN) V=s \
+                         && rm -rf ./tmp \
+                         && mv /home/openwrt/lede/bin/targets /home/openwrt \
+                         && rm -rf /home/openwrt/lede \
+                         " 
 
 FROM ubuntu:16.04
 
