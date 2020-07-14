@@ -20,8 +20,6 @@ RUN apt-get update \
                          && ./scripts/feeds update -a \
                          && ./scripts/feeds install -a \
                          && cp /home/openwrt/.config .config \
-                         && mv /home/openwrt/lede/bin/targets /home/openwrt \
-                         && rm -rf /home/openwrt/lede \
                          " \
 
     && echo 'root:root' |chpasswd \
