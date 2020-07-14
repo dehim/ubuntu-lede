@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY files /
 
 RUN apt-get update \
-    && apt-get install -y sudo curl apt-utils tzdata openssh-server dialog vim iputils-ping supervisor time openssl tzdata sudo xz-utils \
+    && apt-get install -y sudo curl apt-utils tzdata openssh-server dialog vim iputils-ping supervisor time \
                           build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core \
                           gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget swig \
     && cp -f /usr/share/zoneinfo/Asia/Chongqing /etc/localtime \
@@ -20,9 +20,24 @@ RUN apt-get update \
                          && ./scripts/feeds update -a \
                          && ./scripts/feeds install -a \
                          && cp /home/openwrt/.config .config \
-                         " \
+                         && make -j$(getconf _NPROCESSORS_ONLN) download V=s \
+                         && make -j$(getconf _NPROCESSORS_ONLN) V=s \
+                         && rm -rf ./tmp \
+                         && mv /home/openwrt/lede/bin/targets /home/openwrt \
+                         && rm -rf /home/openwrt/lede \
+                         " 
 
+FROM ubuntu:16.04
+
+LABEL maintainer "dehim"
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update \
+    && apt-get install -y supervisor openssh-server openssl vim tzdata git sudo xz-utils \
+               build-essential \
     && echo 'root:root' |chpasswd \
+    && cp -f /usr/share/zoneinfo/Asia/Chongqing /etc/localtime \
     && mv /bin/sh /bin/sh_bak \
     && ln -s /bin/bash /bin/sh \
     && mkdir -p /var/run/sshd \
@@ -68,6 +83,7 @@ RUN apt-get update \
     && echo "[program:sshd] \ncommand = /usr/sbin/sshd -D \nautostart = true \nautorestart = true \n" >> /shareVolume_demo/config/supervisor/sshd.ini.bak 
 
 COPY files/etc/supervisord.conf /etc/
+COPY --from=builder /home/openwrt /shareVolume_demo/
 
 VOLUME ["/shareVolume"]
 
