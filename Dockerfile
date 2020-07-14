@@ -36,7 +36,7 @@ RUN apt-get update \
     && ssh-keygen -t ed25519 -f /shareVolume_demo/config/ssh/id_ed25519 -N "" \
     && chmod -R 777 /usr/src/ \
     && sed -ri 's/^#   StrictHostKeyChecking\s+.*/    StrictHostKeyChecking no/' /etc/ssh/ssh_config \
-    && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin no/' /etc/ssh/sshd_config \
+    && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && cp -f /etc/ssh/ssh_config /etc/ssh/ssh_config_demo \
     && cp -f /etc/ssh/sshd_config /etc/ssh/sshd_config_demo \
     && sed -i 's@#   IdentityFile ~/.ssh/id_rsa@   IdentityFile \/shareVolume\/config\/ssh\/id_rsa@' /etc/ssh/ssh_config \
