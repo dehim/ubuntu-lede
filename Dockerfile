@@ -20,8 +20,8 @@ RUN apt-get update \
                          && ./scripts/feeds update -a \
                          && ./scripts/feeds install -a \
                          && cp /home/openwrt/.config .config \
-                         && make -j$(getconf _NPROCESSORS_ONLN) download V=s \
-                         && make -j$(getconf _NPROCESSORS_ONLN) V=s \
+                         && make -j1 download V=s \
+                         && make -j1 V=s \
                          && rm -rf ./tmp \
                          && mv /home/openwrt/lede/bin/targets /home/openwrt \
                          && rm -rf /home/openwrt/lede \
