@@ -66,8 +66,9 @@ RUN apt-get update \
     && mv /etc/ssh/*_demo /shareVolume_demo/config/ssh/ \
     && cp -rf ~/.bashrc /.bashrc \
     && cp -rf ~/.bash_profile /.bash_profile \
-    && sed -i 's@files = /etc/supervisor/conf.d/*.conf@; files = /etc/supervisor/conf.d/*.conf@' /etc/supervisord.conf \
-    && echo 'files = /shareVolume/config/supervisor/*.ini' > /etc/supervisord.conf \
+    && sed -i 's@files = /etc/supervisor/conf.d/*.conf@; files = /etc/supervisor/conf.d/*.conf@' /etc/supervisor/supervisord.conf \
+    && echo 'files = /shareVolume/config/supervisor/*.ini' > /etc/supervisor/supervisord.conf \
+    && mv /etc/supervisor/supervisord.conf /etc/supervisord.conf \
     && echo "[supervisord] \nnodaemon = true \nuser = root \n" > /shareVolume_demo/config/supervisor/default.ini \
     && echo "[program:sshd] \ncommand = /usr/sbin/sshd -D \nautostart = true \nautorestart = true \n" >> /shareVolume_demo/config/supervisor/sshd.ini.bak 
 
