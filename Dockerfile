@@ -66,6 +66,8 @@ RUN apt-get update \
     && mv /etc/ssh/*_demo /shareVolume_demo/config/ssh/ \
     && cp -rf ~/.bashrc /.bashrc \
     && cp -rf ~/.bash_profile /.bash_profile \
+    && mkdir -p /shareVolume_demo/www/ \
+    && chown -R www:www /shareVolume_demo/www \
     && sed -i 's@files = /etc/supervisor/conf.d/*.conf@; files = /etc/supervisor/conf.d/*.conf@' /etc/supervisor/supervisord.conf \
     && echo 'files = /shareVolume/config/supervisor/*.ini' > /etc/supervisor/supervisord.conf \
     && mv /etc/supervisor/supervisord.conf /etc/supervisord.conf \
@@ -76,4 +78,4 @@ VOLUME ["/shareVolume"]
 
 CMD ["supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 
-EXPOSE 22
+# EXPOSE 22
