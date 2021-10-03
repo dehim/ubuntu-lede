@@ -70,6 +70,7 @@ RUN apt-get update \
     && sed -i 's@files = /etc/supervisor/conf.d/*.conf@; files = /etc/supervisor/conf.d/*.conf@' /etc/supervisor/supervisord.conf \
     && echo 'files = /shareVolume/config/supervisor/*.ini' > /etc/supervisor/supervisord.conf \
     && mv /etc/supervisor/supervisord.conf /etc/supervisord.conf \
+    && mkdir -p /shareVolume_demo/config/supervisor/ \
     && echo "[supervisord] \nnodaemon = true \nuser = root \n" > /shareVolume_demo/config/supervisor/default.ini \
     && echo "[program:sshd] \ncommand = /usr/sbin/sshd -D \nautostart = true \nautorestart = true \n" >> /shareVolume_demo/config/supervisor/sshd.ini.bak 
 
