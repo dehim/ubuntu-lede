@@ -1,8 +1,15 @@
-FROM dehim/ubuntu-lede:1.1.0 as builder
+FROM dehim/ubuntu-novnc:2021.10.01 as builder
 
 COPY files /
 
 RUN CONFIG_FILENAME='config.2021.10.01'; \
+    && apt-get update \
+    # 需要额外添加cmake，否则编译报错：Compatibility with CMake < 2.8.12 will be removed from a future version of
+    && apt-get install -y apt-utils dialog openssh-server openssl vim tzdata sudo xz-utils iputils-ping supervisor time libjpeg-dev cmake \
+                          build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip \
+                          zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev \
+                          texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler \
+                          g++-multilib antlr3 gperf wget curl swig rsync \
     su www -l -c "cd /home/www \
                          && git clone https://github.com/coolsnowwolf/lede \
                          && cd /home/www/lede/ \
