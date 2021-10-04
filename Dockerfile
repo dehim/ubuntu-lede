@@ -1,9 +1,9 @@
-FROM dehim/ubuntu-novnc:2021.10.01 as builder
+FROM ubuntu:18.04 as builder
 
 COPY files /
 
 RUN CONFIG_FILENAME='config.2021.10.01'; \
-    && apt-get update \
+    apt-get update \
     # 需要额外添加cmake，否则编译报错：Compatibility with CMake < 2.8.12 will be removed from a future version of
     && apt-get install -y apt-utils dialog openssh-server openssl vim tzdata sudo xz-utils iputils-ping supervisor time libjpeg-dev cmake \
                           build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip \
@@ -25,7 +25,7 @@ RUN CONFIG_FILENAME='config.2021.10.01'; \
                          && rm -rf /home/www/lede \
                          " 
 
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
