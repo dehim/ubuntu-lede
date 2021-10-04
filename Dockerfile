@@ -10,7 +10,7 @@ RUN CONFIG_FILENAME='config.2021.10.01'; \
                           zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev \
                           texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler \
                           g++-multilib antlr3 gperf wget curl swig rsync \
-    su www -l -c "cd /home/www \
+    && su www -l -c "cd /home/www \
                          && git clone https://github.com/coolsnowwolf/lede \
                          && cd /home/www/lede/ \
                          && cp /tmp/${CONFIG_FILENAME} /home/www/lede/.config \
