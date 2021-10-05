@@ -3,17 +3,17 @@ FROM ubuntu:18.04 as builder
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
-    && apt-get install -y apt-utils dialog openssh-server openssl vim tzdata sudo xz-utils iputils-ping supervisor time libjpeg-dev xmltoman \
+    && apt-get install -y apt-utils dialog openssh-server openssl vim tzdata sudo xz-utils iputils-ping supervisor time libjpeg-dev \
                           build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip \
                           zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev \
                           texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler \
                           g++-multilib antlr3 gperf wget curl swig rsync \
 
-    && addgroup www \
-    && useradd -g www -r -m -s /bin/bash www \
-    && echo 'www:www' |chpasswd \
+    && addgroup openwrt \
+    && useradd -g openwrt -r -m -s /bin/bash openwrt \
+    && echo 'openwrt:openwrt' |chpasswd \
     && echo 'root:root' |chpasswd \
-    && echo "www ALL=(ALL:ALL) ALL \nwww ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/default \
+    && echo "openwrt ALL=(ALL:ALL) ALL \nopenwrt ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/default \
     && chmod 440 /etc/sudoers.d/default \
     && cp -f /usr/share/zoneinfo/Asia/Chongqing /etc/localtime \
     && chmod 777 -R /usr/src \
@@ -31,9 +31,9 @@ RUN apt-get update \
     && ssh-keygen -t ed25519 -f /shareVolume_demo/config/ssh/id_ed25519 -N "" \
     && chmod -R 777 /usr/src/ \
 	# 解决 sudo -i 映射不了 X11 问题
-    && touch /home/www/.Xauthority \
-    && chown www:www /home/www/.Xauthority \
-	&& ln -s /home/www/.Xauthority /root/.Xauthority \
+    && touch /home/openwrt/.Xauthority \
+    && chown openwrt:openwrt /home/openwrt/.Xauthority \
+	&& ln -s /home/openwrt/.Xauthority /root/.Xauthority \
     && sed -ri 's/^#   StrictHostKeyChecking\s+.*/    StrictHostKeyChecking no/' /etc/ssh/ssh_config \
     && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin no/' /etc/ssh/sshd_config \
     # 解决 rejected X11 forwarding
@@ -65,8 +65,8 @@ RUN apt-get update \
     && mv /etc/ssh/*_demo /shareVolume_demo/config/ssh/ \
     && cp -rf ~/.bashrc /.bashrc \
     && cp -rf ~/.bash_profile /.bash_profile \
-    && mkdir -p /shareVolume_demo/www/ \
-    && chown -R www:www /shareVolume_demo/www \
+    && mkdir -p /shareVolume_demo/openwrt/ \
+    && chown -R openwrt:openwrt /shareVolume_demo/openwrt \
     && sed -i 's@files = /etc/supervisor/conf.d/\*.conf@; files = /etc/supervisor/conf.d/\*.conf@' /etc/supervisor/supervisord.conf \
     && echo 'files = /shareVolume/config/supervisor/\*.ini' >> /etc/supervisor/supervisord.conf \
     && mv /etc/supervisor/supervisord.conf /etc/supervisord.conf \
