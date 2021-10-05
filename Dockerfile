@@ -17,14 +17,14 @@ RUN chmod 777 /tmp \
     && su openwrt -l -c "cd /home/openwrt \
                          && git clone https://github.com/coolsnowwolf/lede \
                          && cd /home/openwrt/lede/ \
-                         && echo 'src-git helloworld https://github.com/fw876/helloworld' >> /home/www/lede/feeds.conf.default \
+                         && echo 'src-git helloworld https://github.com/fw876/helloworld' >> /home/openwrt/lede/feeds.conf.default \
                          && ./scripts/feeds update -a \
                          && ./scripts/feeds install -a \
-                         && cp /tmp/config.2021.10.01 /home/www/lede/.config \
+                         && cp /tmp/config.2021.10.01 /home/openwrt/lede/.config \
                          && make -j1 download V=s \
                          && make -j1 V=s \
                          && rm -rf ./tmp \
-                         && mv /home/www/lede/.config /home/www/config.2021.10.01 \
+                         && mv /home/openwrt/lede/.config /home/openwrt/config.2021.10.01 \
                          && mv /home/openwrt/lede/bin/targets /home/openwrt \
                          && rm -rf /home/openwrt/lede \
                          " 
