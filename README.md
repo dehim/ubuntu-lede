@@ -13,3 +13,8 @@ ubuntu-lede
 
 - 1.1.3
   - user = www
+
+- 1.1.4
+  - add bison
+  - add libnet.so.9
+  - add libpcap.so.1
