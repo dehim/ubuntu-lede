@@ -9,3 +9,7 @@ ubuntu-lede
 
 - 1.1.2
   - add xmltoman
+  - user = openwrt
+
+- 1.1.3
+  - user = www
