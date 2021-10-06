@@ -4,6 +4,7 @@ COPY files /
 
 RUN CONFIG_FILENAME='config.2021.10.01'; \
     chmod 777 /tmp \
+    && apt-get update \
     && su www -l -c "cd /home/www \
                          && git clone https://github.com/coolsnowwolf/lede \
                          && cd /home/www/lede/ \
