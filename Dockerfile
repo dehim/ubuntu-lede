@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as builder
+FROM ubuntu:18.04 as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -17,7 +17,7 @@ RUN apt-get update \
     && tar -zxvf v1.2.tar.gz \
     && cd libnet-1.2 \
     && ./autogen.sh \
-    && ./configure --prefix=/usr --libdir=/usr/lib \
+    && ./configure --prefix=/usr \
     && make \
     && make install \
     && rm -rf /usr/src/* \   
@@ -26,7 +26,7 @@ RUN apt-get update \
     && wget http://www.tcpdump.org/release/libpcap-1.10.1.tar.gz \
     && tar -zxvf libpcap-1.10.1.tar.gz \
     && cd libpcap-1.10.1 \
-    && ./configure --prefix=/usr --libdir=/usr/lib \
+    && ./configure --prefix=/usr \
     && make \
     && make install \
     && rm -rf /usr/src/* \     

@@ -18,6 +18,3 @@ ubuntu-lede
   - add bison
   - add libnet.so.9
   - add libpcap.so.1
-
-- 1.1.6
-  - from ubuntu 20.04
