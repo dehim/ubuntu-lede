@@ -2,7 +2,7 @@ FROM ubuntu:18.04 as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY files /
+# COPY files /
 
 RUN chmod 777 /tmp \
     && apt-get update \
@@ -48,7 +48,7 @@ RUN chmod 777 /tmp \
     && echo "[supervisord] \nnodaemon = true \nuser = root \n" > /shareVolume_demo/config/supervisor/default.ini \
     && echo "[program:sshd] \ncommand = /usr/sbin/sshd -D \nautostart = true \nautorestart = true \n" >> /shareVolume_demo/config/supervisor/sshd.ini.bak 
 
-COPY --from=builder /home/openwrt /shareVolume_demo/
+# COPY --from=builder /home/openwrt /shareVolume_demo/
 
 VOLUME ["/shareVolume"]
 
