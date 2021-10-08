@@ -54,4 +54,4 @@ VOLUME ["/shareVolume"]
 
 CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 
-EXPOSE 22
+# EXPOSE 22
