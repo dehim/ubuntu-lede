@@ -20,7 +20,13 @@ ubuntu-lede
   - add libpcap.so.1
 
 - 1.1.8
-  - from ubuntu 18.04
+  - from ubuntu 18.04 (good)
 
 - 1.1.9
-  - from ubuntu 20.04
+  - from ubuntu 20.04 (always out time)
+  
+- 2021.10.10
+  - base on 1.1.9 (out time)
+
+- 2021.10.12
+  - base on 1.1.8 (good)

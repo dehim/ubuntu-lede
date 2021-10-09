@@ -1,4 +1,4 @@
-FROM dehim/ubuntu-lede:1.1.9 as builder
+FROM dehim/ubuntu-lede:1.1.8 as builder
 
 COPY files /
 
@@ -19,7 +19,7 @@ RUN chmod 777 /tmp \
                          && rm -rf /home/openwrt/lede \
                          " 
 
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 LABEL maintainer "dehim"
 
