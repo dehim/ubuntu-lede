@@ -1,5 +1,8 @@
 ubuntu-lede
 -------------------------------
+Use mt_wifi dirver:
+1.LuCI > Applications > mt_wifi
+2.Network > Wireless > MT_WIFI Configuration > MTK_CHIP_MT7603E_MT7612E
 
 - 1.0.9
   - from ubuntu 20.04
@@ -30,3 +33,10 @@ ubuntu-lede
 
 - 2021.10.12
   - base on 1.1.8 (good)
+
+- 2021.10.12
+  - base on 1.1.8 (good)
+  
+- 2021.10.14
+  - base on 1.1.8
+  - Use mt_wifi dirver

@@ -2,20 +2,19 @@ FROM dehim/ubuntu-lede:1.1.8 as builder
 
 COPY files /
 
-RUN CONFIG_FILENAME='config.2021.10.01'; \
-    chmod 777 /tmp \
+RUN chmod 777 /tmp \
     && apt-get update \
     && su openwrt -l -c "cd /home/openwrt \
                          && git clone https://github.com/coolsnowwolf/lede \
                          && cd /home/openwrt/lede/ \
-                         && echo 'src-git helloworld https://github.com/fw876/helloworld' >> /home/openwrt/lede/feeds.conf.default \
+                         && echo 'src-git helloworld https://github.com/fw876/helloworld' >> feeds.conf.default \
                          && ./scripts/feeds update -a \
                          && ./scripts/feeds install -a \
-                         && cp /tmp/${CONFIG_FILENAME} /home/openwrt/lede/.config \
+                         && cp /tmp/config /home/openwrt/lede/.config \
                          && make -j1 download V=s \
                          && make -j1 V=s \
                          && rm -rf ./tmp \
-                         && mv /home/openwrt/lede/.config /home/openwrt/${CONFIG_FILENAME} \
+                         && mv /home/openwrt/lede/.config /home/openwrt/config \
                          && mv /home/openwrt/lede/bin/targets /home/openwrt/ \
                          && rm -rf /home/openwrt/lede \
                          " 
