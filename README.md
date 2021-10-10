@@ -33,10 +33,3 @@ Use mt_wifi dirver:
 
 - 2021.10.12
   - base on 1.1.8 (good)
-
-- 2021.10.12
-  - base on 1.1.8 (good)
-  
-- 2021.10.14
-  - base on 1.1.8
-  - Use mt_wifi dirver
