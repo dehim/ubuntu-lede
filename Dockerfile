@@ -1,4 +1,4 @@
-FROM dehim/ubuntu-lede:1.1.8 as builder
+FROM dehim/ubuntu-lede:1.1.9 as builder
 
 COPY files /
 
