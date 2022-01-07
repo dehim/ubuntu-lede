@@ -33,3 +33,7 @@ Use mt_wifi dirver:
 
 - 2021.10.12
   - base on 1.1.8 (good)
+
+- 2022.01.01
+  - add nps
+  - base on 1.1.8 (good)
