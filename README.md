@@ -41,5 +41,5 @@ Use mt_wifi dirver:
 - 2022.04.03
   - softether
 
-- 2022.04.04
-  - wireguard
+- 2022.04.05
+  - base
