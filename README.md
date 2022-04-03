@@ -35,5 +35,11 @@ Use mt_wifi dirver:
   - base on 1.1.8 (good)
 
 - 2022.01.01
-  - add nps
-  - base on 1.1.8 (good)
+  - nps (just client, useless)
+  - base on 1.1.8 
+
+- 2022.04.03
+  - softether
+
+- 2022.04.04
+  - wireguard
