@@ -1,4 +1,4 @@
-FROM dehim/ubuntu-novnc:3.10.12.8 as builder
+FROM dehim/ubuntu-novnc:3.6.9.2 as builder
 
 COPY files /
 
