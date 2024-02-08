@@ -1,22 +1,22 @@
-FROM dehim/ubuntu-novnc:3.10.12.8 as builder
+FROM dehim/ubuntu-lede:1.1.10 as builder
 
 COPY files /
 
 RUN chmod 777 /tmp \
     && apt-get update \
-    && su www -l -c "cd /home/www \
+    && su openwrt -l -c "cd /home/openwrt \
                          && git clone https://github.com/coolsnowwolf/lede \
-                         && cd /home/www/lede/ \
+                         && cd /home/openwrt/lede/ \
                          && echo 'src-git helloworld https://github.com/fw876/helloworld' >> feeds.conf.default \
                          && ./scripts/feeds update -a \
                          && ./scripts/feeds install -a \
-                         && cp /tmp/config /home/www/lede/.config \
+                         && cp /tmp/config /home/openwrt/lede/.config \
                          && make -j1 download V=s \
                          && make -j1 V=s \
                          && rm -rf ./tmp \
-                         && mv /home/www/lede/.config /home/www/config \
-                         && mv /home/www/lede/bin/targets /home/www/ \
-                         && rm -rf /home/www/lede \
+                         && mv /home/openwrt/lede/.config /home/openwrt/config \
+                         && mv /home/openwrt/lede/bin/targets /home/openwrt/ \
+                         && rm -rf /home/openwrt/lede \
                          " 
 
 FROM ubuntu:18.04
@@ -35,6 +35,6 @@ RUN apt-get update \
     && mkdir -p /shareVolume_demo/config/supervisor/ \
     && echo "[supervisord] \nnodaemon = true \nuser = root \n" > /shareVolume_demo/config/supervisor/default.ini 
 
-COPY --from=builder /home/www /shareVolume_demo/openwrt
+COPY --from=builder /home/openwrt /shareVolume_demo/openwrt
 
 CMD ["supervisord", "-n", "-c",  "/etc/supervisord.conf"]

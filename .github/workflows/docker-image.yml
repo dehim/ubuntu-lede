@@ -1,0 +1,54 @@
+name: Build and push Docker image
+
+on:
+  push:
+    tags:
+      - '*.*'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux/amd64]
+            # 或者 'linux/arm64','linux/amd64' 根据实际情况调整
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+
+      - 
+        name: project name to lowercase
+        run: echo "PROJECT_NAME=$(basename ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> ${GITHUB_ENV}
+
+      - 
+        name: Get Tag Name
+        id: tag_name
+        run: echo "tag=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_ENV
+        shell: bash
+
+      - 
+        name: Set image tag suffix
+        id: tag_suffix
+        run: |
+          if [ "${{ matrix.platform }}" == "linux/arm64" ]; then
+            echo "::set-output name=suffix::_arm64"
+          else
+            echo "::set-output name=suffix::_amd64"
+          fi
+        shell: bash
+
+      - 
+        name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:${{ env.tag }}}
+
+      - 
+        name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}
+          tag_with_ref: true
+
+
