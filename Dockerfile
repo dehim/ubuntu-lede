@@ -1,4 +1,4 @@
-FROM dehim/ubuntu-novnc:3.6.9.2 as builder
+FROM dehim/ubuntu-novnc:3.10.12.8 as builder
 
 COPY files /
 
@@ -17,24 +17,11 @@ RUN chmod 777 /tmp \
                          && mv /home/www/lede/.config /home/www/config \
                          && mv /home/www/lede/bin/targets /home/www/ \
                          && rm -rf /home/www/lede \
+                         && cd /home \
+                         && tar cvzf lede.tar.gz /home/www/ \
+                         && rm /home/www/config \
+                         && rm -rf /home/www/targets \
                          " 
 
-FROM ubuntu:18.04
-
-LABEL maintainer "dehim"
-
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update \
-    && apt-get install -y supervisor \
-    && mkdir -p /etc/supervisor/conf.d \
-    && mkdir -p /var/log/supervisor \
-    && sed -i 's@files = /etc/supervisor/conf.d/\*.conf@; files = /etc/supervisor/conf.d/\*.conf@' /etc/supervisor/supervisord.conf \
-    && echo 'files = /shareVolume/config/supervisor/\*.ini' >> /etc/supervisor/supervisord.conf \
-    && mv /etc/supervisor/supervisord.conf /etc/supervisord.conf \
-    && mkdir -p /shareVolume_demo/config/supervisor/ \
-    && echo "[supervisord] \nnodaemon = true \nuser = root \n" > /shareVolume_demo/config/supervisor/default.ini 
-
+FROM dehim/ubuntu-novnc:3.10.12.8
 COPY --from=builder /home/www /shareVolume_demo/openwrt
-
-CMD ["supervisord", "-n", "-c",  "/etc/supervisord.conf"]
