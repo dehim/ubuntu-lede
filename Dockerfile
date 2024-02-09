@@ -14,14 +14,12 @@ RUN chmod 777 /tmp \
                          && make -j1 download V=s \
                          && make -j1 V=s \
                          && rm -rf ./tmp \
-                         && mv /home/www/lede/.config /home/www/config \
+                         && mv /home/www/lede/.config /home/www/ \
                          && mv /home/www/lede/bin/targets /home/www/ \
                          && rm -rf /home/www/lede \
-                         && cd /home \
-                         && tar cvzf lede.tar.gz /home/www/ \
-                         && rm /home/www/config \
-                         && rm -rf /home/www/targets \
+                         && cd /home/www/ \
+                         && tar -cvzf lede-$(date +'%Y%m%d%H%M%S').tar.gz .config lede/ \
                          " 
 
 FROM dehim/ubuntu-novnc:3.10.12.8
-COPY --from=builder /home/www /shareVolume_demo/openwrt
+COPY --from=builder /home/www/lede-*.tar.gz /shareVolume_demo/
