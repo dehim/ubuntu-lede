@@ -18,7 +18,7 @@ RUN chmod 777 /tmp \
                          && mv /home/www/lede/bin/targets /home/www/ \
                          && rm -rf /home/www/lede \
                          && cd /home/www/ \
-                         && tar -cvzf lede-$(date +'%Y%m%d%H%M%S').tar.gz .config lede/ \
+                         && tar -cvzf lede-$(date +'%Y%m%d%H%M%S').tar.gz .config targets/ \
                          " 
 
 FROM dehim/ubuntu-novnc:3.10.12.8
